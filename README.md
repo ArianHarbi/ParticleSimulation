@@ -1,4 +1,4 @@
-This is a not so realistic simulation of particles in a vacuum. 
+This is a not so realistic simulation of particles in a vacuum."/n"
 keybinds :
   G -> turn gravity on or off
   F -> turn the horizontal electrical field on or off
