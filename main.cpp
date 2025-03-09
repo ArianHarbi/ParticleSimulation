@@ -202,9 +202,11 @@ Mfield PrimaryMF;
 
 SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[]){
     if(argc >= 3){
-        PrimaryF.setFWFH(stoi(argv[1]),atoi(argv[2]));
-        PrimaryMF.setFWFH(stoi(argv[1]),stoi(argv[2]));
-        SecondaryF.setFWFH(stoi(argv[1]),stoi(argv[2]));
+        if(stoi(argv[1]) <= WIDTH-5 && stoi(argv[2]) <= HEIGHT-5){
+            PrimaryF.setFWFH(stoi(argv[1]),atoi(argv[2]));
+            PrimaryMF.setFWFH(stoi(argv[1]),stoi(argv[2]));
+            SecondaryF.setFWFH(stoi(argv[1]),stoi(argv[2]));
+        }
     }
     if (SDL_Init(SDL_INIT_VIDEO) < 0){
         SDL_Log("failed to initilize SDL: %s" , SDL_GetError());
