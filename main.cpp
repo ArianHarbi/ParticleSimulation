@@ -10,9 +10,9 @@ using namespace std;
 static SDL_Window *window = NULL; 
 static SDL_Renderer *renderer = NULL; 
 const int WIDTH = 1000, HEIGHT = 600;
-const float GRAVITY = 0.1;
+const float GRAVITY = 0.05;
 static int CHARGE = -1;
-const double EMASS = 0.9e-30, NPMASS = 1.5e-29, KCONST = 9e9, e = 0.8;
+const double EMASS = 1e-30, NPMASS = 17e-30, KCONST = 9e9, e = 0.8;
 float mouseX,mouseY;
 static int pCount = 0,eCount = 0 , nCount = 0, prCount = 0;
 bool FOF = true, VFOF = true , HEFD = true, GOF = true, MOF = true , MFD = true, VEFD = true, VOHEF = true;
@@ -201,8 +201,11 @@ field SecondaryF;
 Mfield PrimaryMF;
 
 SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[]){
-
-    SDL_SetAppMetadata("ParticalSimulation", "1.0","com.particle.simulaton");
+    if(argc >= 3){
+        PrimaryF.setFWFH(stoi(argv[1]),atoi(argv[2]));
+        PrimaryMF.setFWFH(stoi(argv[1]),stoi(argv[2]));
+        SecondaryF.setFWFH(stoi(argv[1]),stoi(argv[2]));
+    }
     if (SDL_Init(SDL_INIT_VIDEO) < 0){
         SDL_Log("failed to initilize SDL: %s" , SDL_GetError());
         return SDL_APP_FAILURE;
@@ -400,9 +403,6 @@ SDL_AppResult RenderText(){
 }
 
 SDL_AppResult SDL_AppIterate(void *appstate){
-    PrimaryF.setFWFH(200,200);
-    PrimaryMF.setFWFH(200,200);
-    SecondaryF.setFWFH(200,200);
     SDL_SetRenderDrawColor(renderer,0,0,0,SDL_ALPHA_OPAQUE);
     SDL_RenderClear(renderer);
     if(MOF) PrimaryMF.RenderField();
